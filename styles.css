@@ -49,9 +49,9 @@ footer {
     left: 0;
     width: 100%;
     background: rgba(255, 255, 255, 0.7); /* Light, semi-transparent background */
-    color: #666; /* Lighter gray text for subtlety */
+    color: #888; /* Even lighter gray for subtle text */
     text-align: center;
     font-size: 14px;
     padding: 10px;
-    border-top: 1px solid #ddd; /* Softer border */
+    border-top: 1px solid #eee; /* Softer, barely noticeable border */
 }
