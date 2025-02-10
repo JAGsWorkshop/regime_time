@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        #countdown {
+            font-size: 2em;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Countdown Timer</h1>
+    <p>Time remaining until 53 days from Noon, January 20, 2025:</p>
+    <div id="countdown"></div>
+
+    <script>
+        function startCountdown() {
+            // Define the start date (Noon, Jan 20, 2025)
+            const startDate = new Date("January 20, 2025 12:00:00").getTime();
+
+            // Define the end date (53 days later)
+            const endDate = startDate + (53 * 24 * 60 * 60 * 1000);
+
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const timeLeft = endDate - now;
+
+                if (timeLeft <= 0) {
+                    document.getElementById("countdown").innerHTML = "Time's up!";
+                    clearInterval(interval);
+                    return;
+                }
+
+                // Calculate days, hours, minutes, and seconds
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                document.getElementById("countdown").innerHTML = 
+                    `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }
+
+            // Update countdown every second
+            const interval = setInterval(updateCountdown, 1000);
+            updateCountdown();
+        }
+
+        startCountdown();
+    </script>
+
+</body>
+</html>
