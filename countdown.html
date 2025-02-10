@@ -49,13 +49,35 @@
                     return;
                 }
 
-                // Function to format time
+                // Function to format time and hide zero values
                 function formatTime(timeInMs) {
-                    const days = Math.floor(timeInMs / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((timeInMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((timeInMs % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((timeInMs % (1000 * 60)) / 1000);
-                    return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+                    const totalSeconds = Math.floor(timeInMs / 1000);
+
+                    const years = Math.floor(totalSeconds / (365.25 * 24 * 60 * 60));
+                    const remainingAfterYears = totalSeconds % (365.25 * 24 * 60 * 60);
+
+                    const months = Math.floor(remainingAfterYears / (30.44 * 24 * 60 * 60));
+                    const remainingAfterMonths = remainingAfterYears % (30.44 * 24 * 60 * 60);
+
+                    const days = Math.floor(remainingAfterMonths / (24 * 60 * 60));
+                    const remainingAfterDays = remainingAfterMonths % (24 * 60 * 60);
+
+                    const hours = Math.floor(remainingAfterDays / (60 * 60));
+                    const remainingAfterHours = remainingAfterDays % (60 * 60);
+
+                    const minutes = Math.floor(remainingAfterHours / 60);
+                    const seconds = remainingAfterHours % 60;
+
+                    // Build the output dynamically (hide zero values)
+                    let timeString = "";
+                    if (years > 0) timeString += `${years}y `;
+                    if (months > 0) timeString += `${months}m `;
+                    if (days > 0) timeString += `${days}d `;
+                    if (hours > 0) timeString += `${hours}h `;
+                    if (minutes > 0) timeString += `${minutes}m `;
+                    if (seconds > 0 || timeString === "") timeString += `${seconds}s`;
+
+                    return timeString.trim();
                 }
 
                 // Update the timers
