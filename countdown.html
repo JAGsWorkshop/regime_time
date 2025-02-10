@@ -3,59 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Countdown Timer</title>
+    <title>Count Up Timer</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 50px;
         }
-        #countdown {
+        #countup {
             font-size: 2em;
-            color: red;
+            color: green;
         }
     </style>
 </head>
 <body>
 
-    <h1>Countdown Timer</h1>
-    <p>Time remaining until 53 days from Noon, January 20, 2025:</p>
-    <div id="countdown"></div>
+    <h1>Count Up Timer</h1>
+    <p>Time elapsed since Noon, January 20, 2025:</p>
+    <div id="countup"></div>
 
     <script>
-        function startCountdown() {
+        function startCountUp() {
             // Define the start date (Noon, Jan 20, 2025)
             const startDate = new Date("January 20, 2025 12:00:00").getTime();
 
-            // Define the end date (53 days later)
-            const endDate = startDate + (53 * 24 * 60 * 60 * 1000);
-
-            function updateCountdown() {
+            function updateCountUp() {
                 const now = new Date().getTime();
-                const timeLeft = endDate - now;
+                const elapsedTime = now - startDate;
 
-                if (timeLeft <= 0) {
-                    document.getElementById("countdown").innerHTML = "Time's up!";
-                    clearInterval(interval);
+                if (elapsedTime < 0) {
+                    document.getElementById("countup").innerHTML = "The start date is in the future.";
                     return;
                 }
 
                 // Calculate days, hours, minutes, and seconds
-                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                const days = Math.floor(elapsedTime / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((elapsedTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
 
-                document.getElementById("countdown").innerHTML = 
+                document.getElementById("countup").innerHTML = 
                     `${days}d ${hours}h ${minutes}m ${seconds}s`;
             }
 
-            // Update countdown every second
-            const interval = setInterval(updateCountdown, 1000);
-            updateCountdown();
+            // Update count up every second
+            setInterval(updateCountUp, 1000);
+            updateCountUp();
         }
 
-        startCountdown();
+        startCountUp();
     </script>
 
 </body>
