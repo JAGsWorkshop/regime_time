@@ -1,2 +1,2 @@
 # regime_count
- Random programming projects
+A ChatGPT-generated count-up timer.
