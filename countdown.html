@@ -3,55 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Count Up Timer</title>
+    <title>Dual Count Up Timers</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 50px;
         }
-        #countup {
-            font-size: 2em;
-            color: green;
+        .timer {
+            font-size: 1.8em;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
 
-    <h1>Count Up Timer</h1>
-    <p>Time elapsed since Noon, January 20, 2025:</p>
-    <div id="countup"></div>
+    <h1>Dual Count Up Timers</h1>
+
+    <h2>Period 1: Time Passed Since Noon, Jan 20, 2025</h2>
+    <div id="countup1" class="timer"></div>
+
+    <h2>Period 2: Total Time (Period 1 + 2016-2020 Time)</h2>
+    <div id="countup2" class="timer"></div>
 
     <script>
-        function startCountUp() {
-            // Define the start date (Noon, Jan 20, 2025)
-            const startDate = new Date("January 20, 2025 12:00:00").getTime();
+        function startCountUpTimers() {
+            // Period 1 Start Date (Noon, Jan 20, 2025)
+            const period1StartDate = new Date("January 20, 2025 12:00:00").getTime();
+
+            // Period 1 Duration (From Jan 20, 2016 to Jan 20, 2020) in milliseconds
+            const period1Duration = 1461 * 24 * 60 * 60 * 1000; // 1461 days converted to milliseconds
 
             function updateCountUp() {
                 const now = new Date().getTime();
-                const elapsedTime = now - startDate;
 
-                if (elapsedTime < 0) {
-                    document.getElementById("countup").innerHTML = "The start date is in the future.";
+                // Timer 1: Time Passed Since Noon, Jan 20, 2025
+                const elapsedTime1 = now - period1StartDate;
+
+                // Timer 2: Period 1 (2016-2020) + Elapsed Time Since Jan 20, 2025
+                const elapsedTime2 = period1Duration + elapsedTime1;
+
+                if (elapsedTime1 < 0) {
+                    document.getElementById("countup1").innerHTML = "The start date is in the future.";
+                    document.getElementById("countup2").innerHTML = "The start date is in the future.";
                     return;
                 }
 
-                // Calculate days, hours, minutes, and seconds
-                const days = Math.floor(elapsedTime / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((elapsedTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
+                // Function to format time
+                function formatTime(timeInMs) {
+                    const days = Math.floor(timeInMs / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((timeInMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((timeInMs % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((timeInMs % (1000 * 60)) / 1000);
+                    return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+                }
 
-                document.getElementById("countup").innerHTML = 
-                    `${days}d ${hours}h ${minutes}m ${seconds}s`;
+                // Update the timers
+                document.getElementById("countup1").innerHTML = formatTime(elapsedTime1);
+                document.getElementById("countup2").innerHTML = formatTime(elapsedTime2);
             }
 
-            // Update count up every second
+            // Update timers every second
             setInterval(updateCountUp, 1000);
             updateCountUp();
         }
 
-        startCountUp();
+        startCountUpTimers();
     </script>
 
 </body>
