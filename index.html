@@ -32,6 +32,9 @@
     <h2>Total Regime Time</h2>
     <div id="countup2" class="timer"></div>
 
+    <h2>Total Regime Time</h2>
+    <div id="countup3" class="timer"></div>
+
     <footer>
         <p>Created by ChatGPT (OpenAI) in collaboration with the site owner.</p>
         <p>This website is provided as-is, without warranty of any kind. No copyright, ownership rights, or liability are claimed or assumed.</p>
@@ -42,8 +45,11 @@
             // Period 1 Start Date (Noon, Jan 20, 2025)
             const period1StartDate = new Date("January 20, 2025 12:00:00").getTime();
 
-            // Period 1 Duration (From Jan 20, 2016 to Jan 20, 2020) in milliseconds
-            const period1Duration = 1461 * 24 * 60 * 60 * 1000; // 1461 days converted to milliseconds
+            // Period 2 Start Date (Feb 11, 2025)
+            const period2StartDate = new Date("February 11, 2025 00:00:00").getTime();
+
+            // Period 3 Duration (From Jan 20, 2016 to Jan 20, 2020) in milliseconds
+            const period3Duration = 1461 * 24 * 60 * 60 * 1000; // 1461 days converted to milliseconds
 
             function updateCountUp() {
                 const now = new Date().getTime();
@@ -51,12 +57,16 @@
                 // Timer 1: Time Passed Since Noon, Jan 20, 2025
                 const elapsedTime1 = now - period1StartDate;
 
-                // Timer 2: Period 1 (2016-2020) + Elapsed Time Since Jan 20, 2025
-                const elapsedTime2 = period1Duration + elapsedTime1;
+                // Timer 2: Time Passed Since Feb 11, 2025
+                const elapsedTime2 = now - period2StartDate;
+
+                // Timer 3: Period 1 (2016-2020) + Elapsed Time Since Jan 20, 2025
+                const elapsedTime3 = period3Duration + elapsedTime1;
 
                 if (elapsedTime1 < 0) {
                     document.getElementById("countup1").innerHTML = "The start date is in the future.";
                     document.getElementById("countup2").innerHTML = "The start date is in the future.";
+                    document.getElementById("countup3").innerHTML = "The start date is in the future.";
                     return;
                 }
 
@@ -94,6 +104,7 @@
                 // Update the timers
                 document.getElementById("countup1").innerHTML = formatTime(elapsedTime1);
                 document.getElementById("countup2").innerHTML = formatTime(elapsedTime2);
+                document.getElementById("countup3").innerHTML = formatTime(elapsedTime3);
             }
 
             // Update timers every second
