@@ -71,36 +71,35 @@
                 }
 
                 // Function to format time and hide zero values
-                function formatTime(timeInMs) {
-                    const totalSeconds = Math.floor(timeInMs / 1000);
-
-                    const years = Math.floor(totalSeconds / (365.25 * 24 * 60 * 60));
-                    const remainingAfterYears = totalSeconds % (365.25 * 24 * 60 * 60);
-
-                    const months = Math.floor(remainingAfterYears / (30.44 * 24 * 60 * 60));
-                    const remainingAfterMonths = remainingAfterYears % (30.44 * 24 * 60 * 60);
-
-                    const days = Math.floor(remainingAfterMonths / (24 * 60 * 60));
-                    const remainingAfterDays = remainingAfterMonths % (24 * 60 * 60);
-
-                    const hours = Math.floor(remainingAfterDays / (60 * 60));
-                    const remainingAfterHours = remainingAfterDays % (60 * 60);
-
-                    const minutes = Math.floor(remainingAfterHours / 60);
-                    const seconds = remainingAfterHours % 60;
-
-                    // Build the output dynamically (hide zero values)
-                    let timeString = "";
-                    if (years > 0) timeString += `${years}y `;
-                    if (months > 0) timeString += `${months}m `;
-                    if (days > 0) timeString += `${days}d `;
-                    if (hours > 0) timeString += `${hours}h `;
-                    if (minutes > 0) timeString += `${minutes}m `;
-                    if (seconds > 0 || timeString === "") timeString += `${seconds}s`;
-
-                    return timeString.trim();
-                }
-
+			function formatTime(timeInMs) {
+				const totalSeconds = Math.floor(timeInMs / 1000);
+			
+				const years = Math.floor(totalSeconds / (365.25 * 24 * 60 * 60));
+				const remainingAfterYears = totalSeconds % (365.25 * 24 * 60 * 60);
+			
+				const months = Math.floor(remainingAfterYears / (30.44 * 24 * 60 * 60));
+				const remainingAfterMonths = remainingAfterYears % (30.44 * 24 * 60 * 60);
+			
+				const days = Math.floor(remainingAfterMonths / (24 * 60 * 60));
+				const remainingAfterDays = remainingAfterMonths % (24 * 60 * 60);
+			
+				const hours = Math.floor(remainingAfterDays / (60 * 60));
+				const remainingAfterHours = remainingAfterDays % (60 * 60);
+			
+				const minutes = Math.floor(remainingAfterHours / 60);
+				const seconds = Math.floor(remainingAfterHours % 60); // Fixed: Use Math.floor to prevent floating-point issues
+			
+				// Build the output dynamically (hide zero values)
+				let timeString = "";
+				if (years > 0) timeString += `${years}y `;
+				if (months > 0) timeString += `${months}m `;
+				if (days > 0) timeString += `${days}d `;
+				if (hours > 0) timeString += `${hours}h `;
+				if (minutes > 0) timeString += `${minutes}m `;
+				if (seconds >= 0 || timeString === "") timeString += `${seconds}s`; // Always show seconds
+			
+				return timeString.trim();
+}
                 // Update the timers
                 document.getElementById("countup1").innerHTML = formatTime(elapsedTime1);
                 document.getElementById("countup2").innerHTML = formatTime(elapsedTime2);
