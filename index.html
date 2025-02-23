@@ -24,15 +24,15 @@
 </head>
 <body>
 
-    <h1>How Long Have We Lived </br> Under A Trump Regime?</h1>
+    <h1>How Long Have We Lived </br> Under A Musk-Trump Regime?</h1>
 
-    <h2>Current Regime</h2>
+    <h2>Current Trump Regime</h2>
     <div id="countup1" class="timer"></div>
 
-    <h2>Total Regime Time</h2>
+    <h2>Current Musk Regime</h2>
     <div id="countup2" class="timer"></div>
 
-    <h2>Total Regime Time</h2>
+    <h2>Total Musk-Trump Regime Time</h2>
     <div id="countup3" class="timer"></div>
 
     <footer>
@@ -41,54 +41,55 @@
     </footer>
 
     <script>
-        function startCountUpTimers() {
-            // Period 1 Start Date (Noon, Jan 20, 2025)
-            const period1StartDate = new Date("January 20, 2025 12:00:00").getTime();
-
-            // Period 2 Start Date (Feb 11, 2025)
-            const period2StartDate = new Date("February 11, 2025 00:00:00").getTime();
-
-            // Period 3 Duration (From Jan 20, 2016 to Jan 20, 2020) in milliseconds
-            const period3Duration = 1461 * 24 * 60 * 60 * 1000; // 1461 days converted to milliseconds
-
-            function updateCountUp() {
-                const now = new Date().getTime();
-
-                // Timer 1: Time Passed Since Noon, Jan 20, 2025
-                const elapsedTime1 = now - period1StartDate;
-
-                // Timer 2: Time Passed Since Feb 11, 2025
-                const elapsedTime2 = now - period2StartDate;
-
-                // Timer 3: Period 1 (2016-2020) + Elapsed Time Since Jan 20, 2025
-                const elapsedTime3 = period3Duration + elapsedTime1;
-
-                if (elapsedTime1 < 0) {
-                    document.getElementById("countup1").innerHTML = "The start date is in the future.";
-                    document.getElementById("countup2").innerHTML = "The start date is in the future.";
-                    document.getElementById("countup3").innerHTML = "The start date is in the future.";
-                    return;
-                }
-
-                // Function to format time and hide zero values
+		function startCountUpTimers() {
+			// Period 1 Start Date (Noon, Jan 20, 2025)
+			const period1StartDate = new Date("January 20, 2025 12:00:00").getTime();
+		
+			// Period 2 Start Date (Feb 11, 2025)
+			const period2StartDate = new Date("February 11, 2025 00:00:00").getTime();
+		
+			// Period 3 Duration (From Jan 20, 2016 to Jan 20, 2020) in milliseconds
+			const period3Duration = 1461 * 24 * 60 * 60 * 1000; // 1461 days converted to milliseconds
+		
+			function updateCountUp() {
+				const now = new Date().getTime();
+		
+				// Timer 1: Time Passed Since Noon, Jan 20, 2025
+				const elapsedTime1 = now - period1StartDate;
+		
+				// Timer 2: Time Passed Since Feb 11, 2025
+				const elapsedTime2 = now - period2StartDate;
+		
+				// Timer 3: Period 1 (2016-2020) + Elapsed Time Since Jan 20, 2025
+				const elapsedTime3 = period3Duration + elapsedTime1;
+		
+				if (elapsedTime1 < 0) {
+					document.getElementById("countup1").innerHTML = "The start date is in the future.";
+					document.getElementById("countup2").innerHTML = "The start date is in the future.";
+					document.getElementById("countup3").innerHTML = "The start date is in the future.";
+					return;
+				}
+		
+				// Function to format time and show total days
 				function formatTime(timeInMs) {
 					let totalSeconds = Math.floor(timeInMs / 1000); // Convert to whole seconds
-				
+					const totalDays = Math.floor(totalSeconds / (24 * 60 * 60)); // Get total days count
+					
 					const years = Math.floor(totalSeconds / (365 * 24 * 60 * 60)); // 365 days per year
 					totalSeconds %= (365 * 24 * 60 * 60);
-				
+		
 					const months = Math.floor(totalSeconds / (30 * 24 * 60 * 60)); // 30 days per month
 					totalSeconds %= (30 * 24 * 60 * 60);
-				
+		
 					const days = Math.floor(totalSeconds / (24 * 60 * 60)); // Convert to days
 					totalSeconds %= (24 * 60 * 60);
-				
+		
 					const hours = Math.floor(totalSeconds / (60 * 60)); // Convert to hours
 					totalSeconds %= (60 * 60);
-				
+		
 					const minutes = Math.floor(totalSeconds / 60); // Convert to minutes
 					const seconds = totalSeconds % 60; // Convert to seconds (ensuring no decimals)
-				
+		
 					// Build the output dynamically (hide zero values)
 					let timeString = [];
 					if (years > 0) timeString.push(`${years}y`);
@@ -97,20 +98,20 @@
 					if (hours > 0) timeString.push(`${hours}h`);
 					if (minutes > 0) timeString.push(`${minutes}m`);
 					if (seconds >= 0 || timeString.length === 0) timeString.push(`${seconds}s`); // Always show seconds
-				
-					return timeString.join(" ");
+		
+					return `${timeString.join(" ")} (${totalDays} Days)`;
 				}
-				// Update the timers
-                document.getElementById("countup1").innerHTML = formatTime(elapsedTime1);
-                document.getElementById("countup2").innerHTML = formatTime(elapsedTime2);
-                document.getElementById("countup3").innerHTML = formatTime(elapsedTime3);
-            }
-
-            // Update timers every second
-            setInterval(updateCountUp, 1000);
-            updateCountUp();
-        }
-
+		
+				// Update the timers with the new format
+				document.getElementById("countup1").innerHTML = formatTime(elapsedTime1);
+				document.getElementById("countup2").innerHTML = formatTime(elapsedTime2);
+				document.getElementById("countup3").innerHTML = formatTime(elapsedTime3);
+			}
+		
+			// Update timers every second
+			setInterval(updateCountUp, 1000);
+			updateCountUp();
+}
         startCountUpTimers();
     </script>
 
