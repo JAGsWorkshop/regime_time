@@ -2,10 +2,11 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    padding: 50px;
+    padding: 20px; /* Reduced padding for small screens */
     background: url('chatgpt-constitution-faded.png') no-repeat center center fixed; /* Replace with your image */
     background-size: cover;
-    color: #fff; /* Make text white for better contrast */
+    color: #fff; /* White text for readability */
+    overflow-x: hidden; /* Prevents horizontal scrolling */
 }
 
 /* Overlay Effect (Optional: Helps Readability) */
@@ -22,24 +23,26 @@ body::before {
 
 /* Header Styling */
 h1 {
-    font-size: 2.5em;
-    color: #ffcc00; /* Gold color for contrast */
+    font-size: 2em; /* Adjusted for smaller screens */
+    color: #ffcc00;
     text-transform: uppercase;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+    word-wrap: break-word;
 }
 
 /* Timer Sections */
 h2 {
-    font-size: 1.8em;
+    font-size: 1.5em; /* Reduced for better mobile display */
     color: #fff;
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 .timer {
-    font-size: 2em;
+    font-size: 1.8em; /* Adjusted for better mobile readability */
     font-weight: bold;
     color: #00ff00; /* Green for visibility */
     margin-top: 10px;
+    word-wrap: break-word;
 }
 
 /* Footer Styling */
@@ -51,7 +54,31 @@ footer {
     background: rgba(255, 255, 255, 0.7); /* Light, semi-transparent background */
     color: #888; /* Even lighter gray for subtle text */
     text-align: center;
-    font-size: 14px;
-    padding: 10px;
+    font-size: 12px; /* Reduced size for mobile */
+    padding: 8px;
     border-top: 1px solid #eee; /* Softer, barely noticeable border */
+}
+
+/* Media Query: Adjustments for Screens Smaller Than 768px (Phones & Small Tablets) */
+@media screen and (max-width: 768px) {
+    body {
+        padding: 10px; /* Less padding for smaller screens */
+    }
+
+    h1 {
+        font-size: 1.5em; /* Smaller text */
+    }
+
+    h2 {
+        font-size: 1.3em;
+    }
+
+    .timer {
+        font-size: 1.5em; /* Make sure it fits well */
+    }
+
+    footer {
+        font-size: 11px; /* Slightly smaller footer text */
+        padding: 6px;
+    }
 }
