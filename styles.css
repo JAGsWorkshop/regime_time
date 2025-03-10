@@ -7,6 +7,15 @@ body {
     background-size: cover;
     color: #fff; /* White text for readability */
     overflow-x: hidden; /* Prevents horizontal scrolling */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensures body takes at least full viewport height */
+}
+
+/* Main Content Wrapper */
+main {
+    flex: 1; /* Allows content to push the footer down */
+    padding-bottom: 60px; /* Prevents overlap with footer */
 }
 
 /* Overlay Effect (Optional: Helps Readability) */
@@ -45,11 +54,8 @@ h2 {
     word-wrap: break-word;
 }
 
-/* Footer Styling */
+/* Footer Styling (Fix for Overlap) */
 footer {
-    position: fixed; /* Keeps it at the bottom */
-    bottom: 0;
-    left: 0;
     width: 100%;
     background: rgba(255, 255, 255, 0.7); /* Light, semi-transparent background */
     color: #888; /* Even lighter gray for subtle text */
@@ -57,6 +63,7 @@ footer {
     font-size: 12px; /* Reduced size for mobile */
     padding: 8px;
     border-top: 1px solid #eee; /* Softer, barely noticeable border */
+    position: relative; /* Removes fixed positioning to allow scrolling */
 }
 
 /* Media Query: Adjustments for Screens Smaller Than 768px (Phones & Small Tablets) */
