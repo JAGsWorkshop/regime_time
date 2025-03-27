@@ -11,18 +11,18 @@ jobs:
       - name: Check out repo
         uses: actions/checkout@v3
 
-        - name: Replace {{COMMIT_HASH}} in index.html
-          run: |
-            echo "Checking if placeholder exists before replacement:"
-            grep "{{COMMIT_HASH}}" index.html || echo "Placeholder not found"
-        
-            COMMIT_HASH=$(git rev-parse --short HEAD)
-            echo "Using commit hash: $COMMIT_HASH"
-        
-            sed -i "s/{{COMMIT_HASH}}/$COMMIT_HASH/g" index.html
-        
-            echo "Checking file contents after replacement:"
-            grep "$COMMIT_HASH" index.html || echo "Replacement failed"
+      - name: Replace {{COMMIT_HASH}} in index.html
+        run: |
+          echo "Checking if placeholder exists before replacement:"
+          grep "{{COMMIT_HASH}}" index.html || echo "Placeholder not found"
+    
+          COMMIT_HASH=$(git rev-parse --short HEAD)
+          echo "Using commit hash: $COMMIT_HASH"
+    
+          sed -i "s/{{COMMIT_HASH}}/$COMMIT_HASH/g" index.html
+    
+          echo "Checking file contents after replacement:"
+          grep "$COMMIT_HASH" index.html || echo "Replacement failed"
     
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
