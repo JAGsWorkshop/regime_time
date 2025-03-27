@@ -1,0 +1,119 @@
+<!-- 
+    Created by ChatGPT (OpenAI) 
+    Contributions and modifications made in collaboration with
+    @jasonanthonyguy@mastodon.social <https://mastodon.social/@jasonanthonyguy>
+    Website concept: Tracking the duration of the Trump Regime.
+
+    Disclaimer:
+    This project is provided as-is, without warranty of any kind, express or implied. 
+    The creator and contributor disclaim any copyright, ownership rights, and liability 
+    for any issues that may arise from its use. The content is for informational and 
+    entertainment purposes only. Users assume all responsibility for how they use this 
+    code or information.
+    
+    Please don't arrest me.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Long Have We Lived Under A Trump Regime?</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to external CSS -->
+</head>
+<body>
+
+    <h1>How Long Have We Lived </br> Under A Musk-Trump Regime?</h1>
+    <main>
+
+    <h2>Current Trump Regime</h2>
+    <div id="countup1" class="timer"></div>
+
+    <h2>Current Musk Regime</h2>
+    <div id="countup2" class="timer"></div>
+
+    <h2>Total Musk-Trump Regime Time</h2>
+    <div id="countup3" class="timer"></div>
+    </main>
+
+    <footer>
+        <p>Created by ChatGPT (OpenAI) in collaboration with the site owner.</p>
+        <p>This website is provided as-is, without warranty of any kind. No copyright, ownership rights, or liability are claimed or assumed.</p>
+    	<p style="font-size: 11px; color: #aaa;">Version: <code>129b6be</code></p>
+    </footer>
+
+    <script>
+function startCountUpTimers() {
+    // Define Eastern Time explicitly
+    const timeZone = "America/New_York"; // Eastern Time (ET)
+
+    // Set start times in Eastern Time (Noon ET and Midnight ET)
+    const period1StartDate = new Date("January 20, 2025 12:00:00 GMT-0500").getTime(); // Noon EST
+    const period2StartDate = new Date("February 11, 2025 00:00:00 GMT-0500").getTime(); // Midnight EST
+
+    // Fixed duration for the 2016-2020 period
+    const period3Duration = 1461 * 24 * 60 * 60 * 1000; // 1461 days in milliseconds
+
+    function updateCountUp() {
+        const now = new Date().getTime(); // Get current time in milliseconds
+
+        // Calculate elapsed time
+        const elapsedTime1 = now - period1StartDate;
+        const elapsedTime2 = now - period2StartDate;
+        const elapsedTime3 = period3Duration + elapsedTime1;
+
+        if (elapsedTime1 < 0) {
+            document.getElementById("countup1").innerHTML = "The start date is in the future.";
+            document.getElementById("countup2").innerHTML = "The start date is in the future.";
+            document.getElementById("countup3").innerHTML = "The start date is in the future.";
+            return;
+        }
+
+        // Function to format time correctly and display total days
+        function formatTime(timeInMs) {
+            let totalSeconds = Math.floor(timeInMs / 1000);
+            const totalDays = Math.floor(totalSeconds / (24 * 60 * 60)); // Get total days count
+
+            const years = Math.floor(totalSeconds / (365 * 24 * 60 * 60)); // 365 days per year
+            totalSeconds %= (365 * 24 * 60 * 60);
+
+            const months = Math.floor(totalSeconds / (30 * 24 * 60 * 60)); // 30 days per month
+            totalSeconds %= (30 * 24 * 60 * 60);
+
+            const days = Math.floor(totalSeconds / (24 * 60 * 60)); // Convert to days
+            totalSeconds %= (24 * 60 * 60);
+
+            const hours = Math.floor(totalSeconds / (60 * 60)); // Convert to hours
+            totalSeconds %= (60 * 60);
+
+            const minutes = Math.floor(totalSeconds / 60); // Convert to minutes
+            const seconds = totalSeconds % 60; // Convert to seconds (ensuring no decimals)
+
+            // Build the output dynamically (hide zero values)
+            let timeString = [];
+            if (years > 0) timeString.push(`${years}y`);
+            if (months > 0) timeString.push(`${months}m`);
+            if (days > 0) timeString.push(`${days}d`);
+            if (hours > 0) timeString.push(`${hours}h`);
+            if (minutes > 0) timeString.push(`${minutes}m`);
+            if (seconds >= 0 || timeString.length === 0) timeString.push(`${seconds}s`); // Always show seconds
+
+            return `${timeString.join(" ")} (${totalDays} Days)`;
+        }
+
+        // Update the timers with correctly formatted time
+        document.getElementById("countup1").innerHTML = formatTime(elapsedTime1);
+        document.getElementById("countup2").innerHTML = formatTime(elapsedTime2);
+        document.getElementById("countup3").innerHTML = formatTime(elapsedTime3);
+    }
+
+    // Run the function every second
+    setInterval(updateCountUp, 1000);
+    updateCountUp();
+}
+        startCountUpTimers();
+    </script>
+
+</body>
+</html>
