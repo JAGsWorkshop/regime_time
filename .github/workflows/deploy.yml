@@ -11,16 +11,20 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
 
+      - name: Build production files
+        run: |
+          mkdir dist
+          rsync -av --exclude='.git' --exclude='.github' --exclude='~unused' --exclude='README.md' . dist/
+          # Create .nojekyll so GitHub Pages serves files as-is
+          touch dist/.nojekyll
+
       - name: Replace commit hash in index.html
         run: |
           COMMIT_HASH=$(git rev-parse --short HEAD)
-          sed -i "s/{{COMMIT_HASH}}/$COMMIT_HASH/g" index.html
-
-      - name: Append build marker
-        run: echo "<!-- Built at $(date -u) -->" >> index.html
+          sed -i "s/{{COMMIT_HASH}}/$COMMIT_HASH/g" dist/index.html
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./
+          publish_dir: ./dist
