@@ -8,24 +8,23 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repo
+      - name: Check out repository
         uses: actions/checkout@v3
+
+      - name: Prepare deployment directory
+        run: |
+          mkdir dist
+          cp index.html dist/
+          cp styles.css dist/
+          cp .nojekyll dist/
 
       - name: Replace {{COMMIT_HASH}} in index.html
         run: |
-          echo "Checking if placeholder exists before replacement:"
-          grep "{{COMMIT_HASH}}" index.html || echo "Placeholder not found"
-    
           COMMIT_HASH=$(git rev-parse --short HEAD)
-          echo "Using commit hash: $COMMIT_HASH"
-    
-          sed -i "s/{{COMMIT_HASH}}/$COMMIT_HASH/g" index.html
-    
-          echo "Checking file contents after replacement:"
-          grep "$COMMIT_HASH" index.html || echo "Replacement failed"
-    
+          sed -i "s/{{COMMIT_HASH}}/$COMMIT_HASH/g" dist/index.html
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./  # Make sure index.html is here
+          publish_dir: ./dist
