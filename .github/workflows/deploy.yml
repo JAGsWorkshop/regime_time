@@ -2,25 +2,22 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]  # or 'master' if that's your default branch
+    branches: [main]
 
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repo
+      - name: Check out repository
         uses: actions/checkout@v3
 
-      - name: Get short commit hash
-        id: vars
-        run: echo "COMMIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-
-      - name: Replace commit hash in index.html
+      - name: Get short commit hash and inject into index.html
         run: |
-          sed -i "s/{{COMMIT_HASH}}/${{ github.sha::7 }}/g" index.html
+          COMMIT_HASH=$(git rev-parse --short HEAD)
+          sed -i "s/{{COMMIT_HASH}}/$COMMIT_HASH/g" index.html
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./  # or ./dist if you're using a build tool
+          publish_dir: ./  # or your build output directory
