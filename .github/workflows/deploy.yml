@@ -11,27 +11,16 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
 
-      - name: Prepare deployment directory
-        run: |
-          mkdir dist
-          cp index.html dist/
-          cp styles.css dist/
-          cp .nojekyll dist/
-
-      - name: Replace {{COMMIT_HASH}} in dist/index.html and verify
+      - name: Replace commit hash in index.html
         run: |
           COMMIT_HASH=$(git rev-parse --short HEAD)
-          sed -i "s/{{COMMIT_HASH}}/$COMMIT_HASH/g" dist/index.html
-      
-          echo "---- index.html after replacement ----"
-          cat dist/index.html
-          echo "--------------------------------------"
+          sed -i "s/{{COMMIT_HASH}}/$COMMIT_HASH/g" index.html
 
-      - name: Append marker to dist/index.html
-        run: echo "<!-- Built at $(date -u) -->" >> dist/index.html
-  
+      - name: Append build marker
+        run: echo "<!-- Built at $(date -u) -->" >> index.html
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./
