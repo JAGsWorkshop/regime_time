@@ -18,11 +18,18 @@ jobs:
           cp styles.css dist/
           cp .nojekyll dist/
 
-      - name: Replace {{COMMIT_HASH}} in index.html
+      - name: Replace {{COMMIT_HASH}} in dist/index.html and verify
         run: |
           COMMIT_HASH=$(git rev-parse --short HEAD)
           sed -i "s/{{COMMIT_HASH}}/$COMMIT_HASH/g" dist/index.html
+      
+          echo "---- index.html after replacement ----"
+          cat dist/index.html
+          echo "--------------------------------------"
 
+      - name: Append marker to dist/index.html
+        run: echo "<!-- Built at $(date -u) -->" >> dist/index.html
+  
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
